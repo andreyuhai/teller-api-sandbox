@@ -29,16 +29,14 @@ defmodule TellerApiSandboxWeb.Router do
     decoded_state =
       conn
       |> get_req_header("authorization")
-      |> decode_api_token_from_basic_auth()
+      |> decode_auth_header()
+      |> Tokens.decode_state_from()
 
     conn
     |> assign(:state, decoded_state)
   end
 
-  defp decode_api_token_from_basic_auth(["Basic " <> base64_credentials]) do
-    {:ok, "test_" <> credentials} = Base.decode64(base64_credentials)
-    [api_token, pass]= String.split(credentials, ":")
-    {:ok, %{} = verified} = Plug.Crypto.verify("foo", "bar", api_token)
-    verified
+  defp decode_auth_header(["Basic " <> base64_encoded_credentials]) do
+    Base.decode64!(base64_encoded_credentials)
   end
 end
