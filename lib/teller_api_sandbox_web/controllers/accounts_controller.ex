@@ -6,7 +6,9 @@ defmodule TellerApiSandboxWeb.AccountsController do
   end
 
   def token(conn, _params) do
-    System.put_env("TELLER_USERNAME", "burakkaymakciaskdlmasd")
-    json(conn, %{token: "burakkaymakciaskdlmasd"})
+    {:ok, enc} = Jason.encode(%{name: "burak", surname: "kaymakci"})
+    str = "test_" <> Plug.Crypto.encrypt("foo", "bar", enc)
+    System.put_env("TELLER_USERNAME", str)
+    json(conn, %{token: str})
   end
 end
