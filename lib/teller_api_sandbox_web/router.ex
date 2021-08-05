@@ -1,6 +1,8 @@
 defmodule TellerApiSandboxWeb.Router do
   use TellerApiSandboxWeb, :router
 
+  alias TellerApiSandbox.Tokens
+
   pipeline :api do
     plug :accepts, ["json"]
     plug :auth
@@ -10,8 +12,8 @@ defmodule TellerApiSandboxWeb.Router do
   scope "/api", TellerApiSandboxWeb do
     pipe_through :api
 
-    get "/token", AccountsController, :token
-    get "/accounts", AccountsController, :index
+    get "/token", AccountController, :token
+    get "/accounts", AccountController, :index
     # get "/accounts/:account_id"
     # get "/accounts/:account_id/transactions"
     # get "/accounts/:account_id/transactions/:transaction_id"
