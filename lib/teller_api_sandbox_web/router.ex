@@ -16,7 +16,7 @@ defmodule TellerApiSandboxWeb.Router do
     # get "/accounts/:account_id/transactions/:transaction_id"
   end
 
-  defp auth(conn, opts) do
+  defp auth(conn, _opts) do
     username = System.fetch_env!("TELLER_USERNAME")
     password = System.fetch_env!("TELLER_PASSWORD")
     Plug.BasicAuth.basic_auth(conn, username: username, password: password)
