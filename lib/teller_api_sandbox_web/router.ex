@@ -1,6 +1,5 @@
 defmodule TellerApiSandboxWeb.Router do
   use TellerApiSandboxWeb, :router
-  import Plug.BasicAuth
 
   pipeline :api do
     plug :accepts, ["json"]
