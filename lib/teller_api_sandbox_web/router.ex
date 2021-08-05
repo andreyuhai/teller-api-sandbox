@@ -4,6 +4,7 @@ defmodule TellerApiSandboxWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug :auth
+    plug :assign_state_from_api_token
   end
 
   scope "/api", TellerApiSandboxWeb do
