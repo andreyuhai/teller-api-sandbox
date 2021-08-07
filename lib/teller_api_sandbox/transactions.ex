@@ -5,12 +5,19 @@ defmodule TellerApiSandbox.Transactions do
     "Uber", "Uber Eats", "Lyft", "Five Guys", "In-N-Out Burger", "Chick-Fil-A", "AMC Metreon", "Apple", "Amazon", "Walmart", "Target", "Hotel Tonight", "Misson Ceviche", "The Creamery", "Caltrain", "Wingstop", "Slim Chickens", "CVS", "Duane Reade", "Walgreens", "Rooster & Rice", "McDonald's", "Burger King", "KFC", "Popeye's", "Shake Shack", "Lowe's", "The Home Depot", "Costco", "Kroger", "iTunes", "Spotify", "Best Buy", "TJ Maxx", "Aldi", "Dollar General", "Macy's", "H.E. Butt", "Dollar Tree", "Verizon Wireless", "Sprint PCS", "T-Mobile", "Kohl's", "Starbucks", "7-Eleven", "AT&T Wireless", "Rite Aid", "Nordstrom", "Ross", "Gap", "Bed, Bath & Beyond", "J.C. Penney", "Subway", "O'Reilly", "Wendy's", "Dunkin' Donuts", "Petsmart", "Dick's Sporting Goods", "Sears", "Staples", "Domino's Pizza", "Pizza Hut", "Papa John's", "IKEA", "Office Depot", "Foot Locker", "Lids", "GameStop", "Sephora", "MAC", "Panera", "Williams-Sonoma", "Saks Fifth Avenue", "Chipotle Mexican Grill", "Exxon Mobil", "Neiman Marcus", "Jack In The Box", "Sonic", "Shell"
   ]
 
-  def valid_transaction_id?(transaction_id, account_id, seed) do
+  def parse_transaction_id("test_txn_" <> transaction_id) do
     with {:ok, decoded_transaction_id} <- Base.decode64(transaction_id),
          <<days_ago::binary-size(2), rest::binary>> <- decoded_transaction_id,
          {days_ago, ""} <- Integer.parse(days_ago),
          {_, ""} <- Integer.parse(rest) do
+      {:ok, days_ago}
+    else
+      _ -> :error
+    end
+  end
 
+  def valid_transaction_id?(transaction_id, account_id, seed) do
+    with {:ok, days_ago} <- parse_transaction_id(transaction_id) do
       transaction = generate_transaction(seed, account_id, days_ago)
       transaction.id == transaction_id
     else
