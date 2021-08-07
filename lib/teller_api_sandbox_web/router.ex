@@ -16,7 +16,7 @@ defmodule TellerApiSandboxWeb.Router do
     get "/accounts", AccountController, :index
     get "/accounts/:account_id", AccountController, :show
     get "/accounts/:account_id/transactions", TransactionController, :index
-    # get "/accounts/:account_id/transactions/:transaction_id"
+    get "/accounts/:account_id/transactions/:transaction_id", TransactionController, :show
   end
 
   defp auth(conn, _opts) do
