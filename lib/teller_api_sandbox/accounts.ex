@@ -7,17 +7,14 @@ defmodule TellerApiSandbox.Accounts do
   end
 
   def generate_account_data(state) do
-    :rand.seed(:exsplus, state.random_seed)
+    :rand.seed(:exs64, state.account_seed)
 
     %{
-      account_number: 112233445566,
-      balances: %{
-        available: 1256.31,
-        ledger: 1256.31
-      },
-      currency_code: "USD",
-      enrollment_id: "test_enr_1xyG_97e",
-      id: state.account_id,
+      account_number: account_number(),
+      balances: balances(),
+      currency_code: currency_code(),
+      enrollment_id: enrollment_id(),
+      id: account_id(),
       institution: %{
         id: "teller_bank",
         name: "The Teller Bank"
@@ -27,10 +24,42 @@ defmodule TellerApiSandbox.Accounts do
         transactions: "http://localhost/accounts/test_acc_E6kuc45U/transactions"
       },
       name: "Test Checking Account",
-      routing_numbers: %{
-        ach: "864952590",
-        wire: "124952590"
-      }
+      routing_numbers: routing_numbers()
     }
+  end
+
+  defp account_number do
+    1_000_000_000..9_999_999_999 |> Enum.random() |> to_string()
+  end
+
+  defp balances do
+    balance = 100_000..900_000 |> Enum.random() |> Kernel./(100) |> to_string()
+
+    %{
+      available: balance,
+      ledger: balance
+    }
+  end
+
+  defp currency_code do
+    currencies = ["USD", "PLN", "EUR", "GBP", "TRY"]
+    Enum.random(currencies)
+  end
+
+  defp enrollment_id do
+    {alg, seed} = :rand.export_seed()
+    "test_enr_" <> (seed |> to_string() |> Base.encode32())
+  end
+
+  defp routing_numbers do
+    %{
+      ach: 100_000_000..999_999_999 |> Enum.random() |> to_string(),
+      wire: 100_000_000..999_999_999 |> Enum.random() |> to_string()
+    }
+  end
+
+  defp account_id do
+    {alg, seed} = :rand.export_seed()
+    "test_acc_" <> (seed |> to_string() |> Base.encode64())
   end
 end
