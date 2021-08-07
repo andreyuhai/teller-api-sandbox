@@ -36,7 +36,7 @@ defmodule TellerApiSandbox.Accounts do
   end
 
   defp balances do
-    balance = 100_000..900_000 |> Enum.random() |> Kernel./(100) |> to_string()
+    balance = 100_000..999_999 |> Enum.random() |> Kernel./(100) |> to_string()
 
     %{
       available: balance,
