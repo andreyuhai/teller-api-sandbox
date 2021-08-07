@@ -30,7 +30,7 @@ defmodule TellerApiSandboxWeb.Router do
       conn
       |> get_req_header("authorization")
       |> decode_auth_header()
-      |> Tokens.decode_state_from()
+      |> Tokens.decode_api_token()
 
     conn
     |> assign(:state, decoded_state)
