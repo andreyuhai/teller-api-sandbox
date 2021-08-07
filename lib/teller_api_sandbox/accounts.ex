@@ -65,4 +65,12 @@ defmodule TellerApiSandbox.Accounts do
     {alg, seed} = :rand.export_seed()
     "test_acc_" <> (seed |> to_string() |> Base.encode64())
   end
+
+  defp institution do
+    institution = Enum.random(@institutions)
+    %{
+      id: institution |> String.downcase() |> String.replace(~r/\s+/, "_"),
+      name: institution
+    }
+  end
 end
