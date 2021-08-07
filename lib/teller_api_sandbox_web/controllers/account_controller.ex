@@ -7,8 +7,16 @@ defmodule TellerApiSandboxWeb.AccountController do
     json(conn, Accounts.generate_account_data(conn.assigns.state))
   end
 
+  def show(conn, params) do
+    if Accounts.valid_account_id?(conn.assigns.state, params["account_id"]) do
+      json(conn, Accounts.generate_account_data(conn.assigns.state))
+    else
+      json(conn, %{error: "Invalid account id"})
+    end
+  end
+
   def token(conn, _params) do
-    token = Tokens.generate(%{account_id: "test_acc_E6kuc45U", rand_seed: :rand.uniform(200)})
+    token = Tokens.generate_api_token(%{account_seed: :rand.uniform(200)})
     System.put_env("TELLER_USERNAME", token)
 
     json(conn, %{token: token})
