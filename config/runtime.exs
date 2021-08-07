@@ -1,6 +1,6 @@
 alias TellerApiSandbox.Tokens
 
-token = Tokens.generate_api_token(%{account_seed: :rand.uniform(200)})
+token = Tokens.generate_api_token(%{seed: :rand.uniform(200)})
 
 System.put_env("TELLER_USERNAME", token)
 System.put_env("TELLER_PASSWORD", "")
