@@ -20,9 +20,7 @@ defmodule TellerApiSandboxWeb.TransactionController do
     transaction_id = params["transaction_id"]
 
     if Transactions.valid_transaction_id?(transaction_id, account_id,state.seed) do
-      {:ok, d} = Base.decode64(transaction_id)
-      <<days_ago::binary-size(2), seed::binary>> = d
-      {days_ago, ""} = Integer.parse(days_ago)
+      {:ok, days_ago} = Transactions.parse_transaction_id(transaction_id)
 
       json(conn, Transactions.generate_transaction(state.seed, account_id, days_ago))
     else
