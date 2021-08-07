@@ -87,7 +87,7 @@ defmodule TellerApiSandbox.Transactions do
 
     {:exs64, current_seed} = :rand.export_seed()
 
-    "#{days_ago_str}#{current_seed}" |> Base.encode64()
+    "test_txn_" <> Base.encode64("#{days_ago_str}#{current_seed}")
   end
 
   defp date(days_ago) do
