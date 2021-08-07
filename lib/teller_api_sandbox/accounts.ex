@@ -1,5 +1,9 @@
 defmodule TellerApiSandbox.Accounts do
 
+  @institutions [
+    "Chase", "Bank of America", "Wells Fargo", "Citi", "Capital One"
+  ]
+
   def valid_account_id?(state, account_id) do
     account_data = generate_account_data(state)
 
