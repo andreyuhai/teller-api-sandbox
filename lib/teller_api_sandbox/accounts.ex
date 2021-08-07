@@ -1,4 +1,11 @@
 defmodule TellerApiSandbox.Accounts do
+
+  def valid_account_id?(state, account_id) do
+    account_data = generate_account_data(state)
+
+    account_data.id == account_id
+  end
+
   def generate_account_data(state) do
     :rand.seed(:exsplus, state.random_seed)
 
