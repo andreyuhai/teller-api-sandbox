@@ -11,21 +11,20 @@ defmodule TellerApiSandbox.Accounts do
   end
 
   def generate_account_data(state) do
-    :rand.seed(:exs64, state.account_seed)
+    :rand.seed(:exs64, state.seed)
+    balances = balances()
+    account_id = account_id()
 
     %{
+      balances: balances,
       account_number: account_number(),
-      balances: balances(),
       currency_code: currency_code(),
       enrollment_id: enrollment_id(),
-      id: account_id(),
-      institution: %{
-        id: "teller_bank",
-        name: "The Teller Bank"
-      },
+      id: account_id,
+      institution: institution(),
       links: %{
-        "self": "http://localhost/accounts/test_acc_E6kuc45U",
-        transactions: "http://localhost/accounts/test_acc_E6kuc45U/transactions"
+        "self": "http://localhost/accounts/#{account_id}",
+        transactions: "http://localhost/accounts/#{account_id}/transactions"
       },
       name: "Test Checking Account",
       routing_numbers: routing_numbers()
