@@ -5,18 +5,21 @@ defmodule TellerApiSandboxWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug :auth
-    plug :assign_state_from_api_token
   end
 
-  scope "/api", TellerApiSandboxWeb do
+  scope "/", TellerApiSandboxWeb do
     pipe_through :api
 
     get "/token", AccountController, :token
-    get "/accounts", AccountController, :index
-    get "/accounts/:account_id", AccountController, :show
-    get "/accounts/:account_id/transactions", TransactionController, :index
-    get "/accounts/:account_id/transactions/:transaction_id", TransactionController, :show
+
+    scope "/" do
+      pipe_through [:auth, :assign_state_from_api_token]
+
+      get "/accounts", AccountController, :index
+      get "/accounts/:account_id", AccountController, :show
+      get "/accounts/:account_id/transactions", TransactionController, :index
+      get "/accounts/:account_id/transactions/:transaction_id", TransactionController, :show
+    end
   end
 
   defp auth(conn, _opts) do
