@@ -19,12 +19,13 @@ defmodule TellerApiSandboxWeb.TransactionController do
     account_id = params["account_id"]
     transaction_id = params["transaction_id"]
 
-    if Transactions.valid_transaction_id?(transaction_id, account_id,state.seed) do
+    with true <- Accounts.valid_account_id?(state, account_id),
+         true <- Transactions.valid_transaction_id?(transaction_id, account_id,state.seed) do
       {:ok, days_ago} = Transactions.parse_transaction_id(transaction_id)
 
       json(conn, Transactions.generate_transaction(state.seed, account_id, days_ago))
     else
-      json(conn, %{error: "Invalid transaction id"})
+      _ -> json(conn, %{error: "Invalid transaction id or account id"})
     end
   end
 end
