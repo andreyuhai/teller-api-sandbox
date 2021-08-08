@@ -1,7 +1,7 @@
 defmodule TellerApiSandboxWeb.TransactionController do
   use TellerApiSandboxWeb, :controller
 
-  alias TellerApiSandbox.{Accounts, Transactions, Tokens}
+  alias TellerApiSandbox.{Accounts, Transactions}
 
   def index(conn, params) do
     state = conn.assigns.state

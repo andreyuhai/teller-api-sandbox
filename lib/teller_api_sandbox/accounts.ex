@@ -50,7 +50,7 @@ defmodule TellerApiSandbox.Accounts do
   end
 
   defp enrollment_id do
-    {alg, seed} = :rand.export_seed()
+    {_, seed} = :rand.export_seed()
     "test_enr_" <> (seed |> to_string() |> Base.encode32())
   end
 

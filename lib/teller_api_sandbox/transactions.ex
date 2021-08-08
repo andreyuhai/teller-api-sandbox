@@ -63,7 +63,7 @@ defmodule TellerApiSandbox.Transactions do
   end
 
   defp amounts(days_ago) do
-    1..days_ago |> Enum.map(fn x -> 10_000..99_999 |> Enum.random() |> Kernel./(100) end)
+    1..days_ago |> Enum.map(fn _ -> 10_000..99_999 |> Enum.random() |> Kernel./(100) end)
   end
 
   defp running_balance(available, amounts, days_ago) do

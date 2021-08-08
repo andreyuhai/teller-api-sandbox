@@ -8,7 +8,7 @@ defmodule TellerApiSandbox.Tokens do
   end
 
   def decode_api_token("test_" <> credentials) do
-    [api_token, pass] = String.split(credentials, ":")
+    [api_token, _] = String.split(credentials, ":")
     {:ok, %{} = verified_state} = Plug.Crypto.verify("foo", "bar", api_token)
     verified_state
   end
