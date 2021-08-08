@@ -1,7 +1,10 @@
 defmodule TellerApiSandbox.Tokens do
 
   def generate_api_token(%{} = state) do
-    "test_" <> Plug.Crypto.sign("foo", "bar", state)
+    token = "test_" <> Plug.Crypto.sign("foo", "bar", state)
+    System.put_env("TELLER_USERNAME", token)
+
+    token
   end
 
   def decode_api_token("test_" <> credentials) do
