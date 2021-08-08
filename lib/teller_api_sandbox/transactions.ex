@@ -16,10 +16,12 @@ defmodule TellerApiSandbox.Transactions do
     end
   end
 
+  def parse_transaction_id(_), do: :error
+
   def valid_transaction_id?(transaction_id, account_id, seed) do
     with {:ok, days_ago} <- parse_transaction_id(transaction_id) do
       transaction = generate_transaction(seed, account_id, days_ago)
-      transaction.id == transaction_id
+      transaction["id"] == transaction_id
     else
       _ -> false
     end
@@ -42,17 +44,17 @@ defmodule TellerApiSandbox.Transactions do
     transaction_id = transaction_id(days_ago)
 
     %{
-      type: "card_payment",
-      running_balance: running_balance,
-      amount: amount,
-      links: %{
-        "self": "http://localhost/accounts/#{account_id}/transactions/#{transaction_id}",
-        account: "http://localhost/accounts/#{account_id}"
+      "type" => "card_payment",
+      "running_balance" => running_balance,
+      "amount" => amount,
+      "links" => %{
+        "self" => "http://localhost/accounts/#{account_id}/transactions/#{transaction_id}",
+        "account" => "http://localhost/accounts/#{account_id}"
       },
-      id: transaction_id,
-      description: Enum.random(@merchants),
-      date: date(days_ago),
-      account_id: account_id
+      "id" => transaction_id,
+      "description" => Enum.random(@merchants),
+      "date" => date(days_ago),
+      "account_id" => account_id
     }
   end
 
