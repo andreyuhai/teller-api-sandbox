@@ -94,6 +94,6 @@ defmodule TellerApiSandbox.Transactions do
   end
 
   defp date(days_ago) do
-    Date.add(Date.utc_today(), - days_ago)
+    Date.utc_today() |> Date.add(- days_ago) |> to_string()
   end
 end
