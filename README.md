@@ -1,3 +1,13 @@
+https://warm-gorge-09289.herokuapp.com/token
+
+You can basically navigate the URL above and get a token.
+After you've got the token you can use the endpoints:
+
+https://warm-gorge-09289.herokuapp.com/accounts
+https://warm-gorge-09289.herokuapp.com/accounts/:account_id
+https://warm-gorge-09289.herokuapp.com/accounts/:account_id/transactions
+https://warm-gorge-09289.herokuapp.com/accounts/:account_id/transactions/:transaction_id
+
 # TellerApiSandbox
 
 To start your Phoenix server:
