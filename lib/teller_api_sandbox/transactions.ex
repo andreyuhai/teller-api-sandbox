@@ -71,6 +71,7 @@ defmodule TellerApiSandbox.Transactions do
     |> Enum.take(days_ago - 1)
     |> Enum.sum()
     |> Kernel.+(available)
+    |> Float.round(2)
     |> to_string()
   end
 
